@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt'
-import JWT from 'jsonwebtoken'
+import jwt from 'jsonwebtoken'
 
 const UserSchema=new mongoose.Schema({
     email:{
@@ -24,12 +24,16 @@ UserSchema.statics.hashPassword= async function(password){
      return await bcrypt.hash(password,10)
 }
 
-UserSchema.methods.isvalidpassword=async function(password){
+UserSchema.methods.isValidPassword=async function(password){
     return await bcrypt.compare(password,this.password)
 }
 
 UserSchema.methods.generateJWT=function(){
-    return JWT.sign({email:this.email},process.env.JWT_SECRET)
+    return jwt.sign(
+        {email:this.email},
+        process.env.JWT_SECRET,
+        {expiresIn:'24h'}
+    );
 }
 
 
