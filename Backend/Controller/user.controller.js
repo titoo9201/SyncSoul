@@ -12,6 +12,7 @@ export const createUserController = async (req,res)=>{
     try{
         const user = await userServices.createUser({email,password});
         const token = user.generateJWT();
+        delete user._doc.password; // password response me na jaye
 
         res.status(201).json({user,token});
     }catch(error){
@@ -40,6 +41,7 @@ export const loginUserController= async (req,res)=>{
        }
 
        const token = user.generateJWT();
+       delete user._doc.password; // password response me na jaye
        res.status(200).json({user,token});
     }catch(error){
         res.status(400).json({error:error.message});
