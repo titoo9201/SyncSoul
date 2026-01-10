@@ -2,7 +2,7 @@ import userModel from '../Models/user.model.js';
 import * as userServices from '../Services/user.services.js';
 import {validationResult} from 'express-validator';
 import redisClient  from '../Services/redis.services.js';
-// register karega user
+// register controller
 export const createUserController = async (req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){
@@ -20,7 +20,7 @@ export const createUserController = async (req,res)=>{
     }
 }
 
-// login karega user
+// login controller
 export const loginUserController= async (req,res)=>{
     const errors = validationResult(req);
     if(!errors.isEmpty()){

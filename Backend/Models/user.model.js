@@ -36,6 +36,13 @@ UserSchema.methods.generateJWT=function(){
     );
 }
 
+UserSchema.methods.toJSON = function () {
+    const obj = this.toObject();
+    delete obj.password;
+    return obj;
+};
+
+
 
 const User=mongoose.model('user',UserSchema);
 

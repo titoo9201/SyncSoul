@@ -3,6 +3,7 @@ import express from 'express';
 import morgan from 'morgan';
 import connect from './DB/db.js';
 import userRoutes from './Routes/user.route.js';
+import projectRoutes from './Routes/project.route.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
 app.use('/api/users', userRoutes);
+app.use('/api/projects', projectRoutes);
 app.get('/', (req, res) => {
     res.send('hello world');
 });
