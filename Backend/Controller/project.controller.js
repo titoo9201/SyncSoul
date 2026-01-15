@@ -43,3 +43,37 @@ export const getAllProjectsController = async(req,res)=>{
         
     }
 }
+
+export const addUserToProjectController= async(req,res)=>{
+    const errors = validationResult(req);
+    if(!errors.isEmpty()){
+        return res.status(400).json({errors:errors.array()});
+    }
+    try{
+        const {projectId,users}=req.body;
+        const loggedInUser= await userModel.findOne({email:req.user.email});
+
+        const project =await projectServices.addUserToProject({
+            projectId,
+            users,
+            userId:loggedInUser._id
+        });
+        res.status(200).json({project} );
+       
+    }
+    catch(err){
+        res.status(400).json({error:err.message});
+    }   
+}
+
+export const getProjectByIdController= async(req,res)=>{
+     const {projectId}=req.params;
+    try{
+        const project = await projectServices.getProjectById({projectId});
+        return res.status(200).json({project})
+
+    }
+    catch(err){
+        res.status(400).json({error:err.message});
+    }
+}
